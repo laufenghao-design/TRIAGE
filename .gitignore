@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Datasets (too large for git)
+datasets/AutoLaparo_Task1/
+datasets/Cholec80/
+
+# Model weights
+models/
+weight/
+*.pth
+*.pt
+
+# Results and outputs
+results/
+
+# Data directory
+data/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Playground data and figures
+playground/**/outputs/
+playground/**/figures/
+
+# Component and Claude
+component/
+.claude/

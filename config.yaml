@@ -1,0 +1,7 @@
+r_temporal: 1
+r_spatial: 24
+
+lambda_weight: 0.6
+cosine_threshold: 0.9
+entropy_prune_k: 3.0
+incoming_protect_k: 3.0
