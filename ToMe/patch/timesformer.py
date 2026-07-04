@@ -1,6 +1,6 @@
 '''
 Adapted from https://github.com/facebookresearch/ToMe
-https://github.com/RenShuhuai-Andy/TESTA/tree/main/testa
+<UPSTREAM_REPOSITORY_URL>
 Token Merging for surgical video understanding
 '''
 from typing import Tuple

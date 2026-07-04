@@ -21,7 +21,7 @@ import math
 class ToMeBlock(Block):
     """
     Modifications:
-     - Apply TESTA between the attention and mlp blocks
+     - Apply token merging between the attention and mlp blocks
      - Compute and propagate token size and potentially the token sources.
     """
     def forward(self, x: torch.Tensor, B, T, K) -> torch.Tensor:
@@ -41,7 +41,7 @@ class ToMeBlock(Block):
             xt = self.temporal_fc(res_temporal) + x[:, 1:, :]
             if 'frame' in merging_type:
                 self._tome_info["class_token"] = False
-                xt, rt = self.testa(xt, metric_t, B, K, 'frame')
+                xt, rt = self.merge_tokens(xt, metric_t, B, K, 'frame')
                 T = xt.size(1) // K
 
             # Spatial_Self_Attention
@@ -76,7 +76,7 @@ class ToMeBlock(Block):
             
             if 'patch' in merging_type:
                 self._tome_info["class_token"] = True
-                x, rs = self.testa(x, metric_s, B, K, 'patch')  
+                x, rs = self.merge_tokens(x, metric_s, B, K, 'patch')
                 x = x[:, 1:, :]  # exclude [cls]
                 if rs>0:    
                     self._tome_info["size_s"] = self._tome_info["size"]
@@ -90,7 +90,7 @@ class ToMeBlock(Block):
         return x, T, K
 
     
-    def testa(self, x, metric, B, L, merging_type):
+    def merge_tokens(self, x, metric, B, L, merging_type):
         r = self._tome_info["r"].pop(0)
         if r > 0:
             if merging_type == 'patch':
@@ -103,7 +103,7 @@ class ToMeBlock(Block):
                     # by default, the size of self._tome_info["size"] is [b, t, l, d]
                     self._tome_info["size"] = self._tome_info["size"].permute(0, 2, 1, 3)
                     self._tome_info["size"] = self._tome_info["size"][:, 1:, ...]  # remove cls
-            # Apply TESTA here
+            # Apply token merging here
             merge, _ = bipartite_soft_matching(
                 metric,
                 r,
@@ -325,7 +325,7 @@ def apply_patch(
     model: VisionTransformer, trace_source: bool = False, prop_attn: bool = True, merging_type: str = 'patch', num_patches: int = 196
 ):
     """
-    Applies TESTA to this transformer. Afterward, set r using model.r.
+    Applies token merging to this transformer. Afterward, set r using model.r.
 
     If you want to know the source of each token (e.g., for visualization), set trace_source = true.
     The sources will be available at model._tome_info["source"] afterward.

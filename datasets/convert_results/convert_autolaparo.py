@@ -35,7 +35,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--nproc_per_node', type=int, default=4, help='Number of GPUs used during inference')
-parser.add_argument('--main_path', type=str, default="./results/surgformer_HTA_ToMe_AutoLaparo_0.0005_0.75_online_key_frame_frame16_Fixed_Stride_4/", help='Path to result directory')
+parser.add_argument('--main_path', type=str, default="./results/", help='Path to result directory')
 args = parser.parse_args()
 
 nproc_per_node = args.nproc_per_node

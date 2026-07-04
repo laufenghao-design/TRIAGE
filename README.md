@@ -9,9 +9,9 @@ pip install -r requirements.txt
 
 ## Data Preparation
 
-Download Cholec80 from https://camma.unistra.fr/datasets/ and place videos in `./datasets/Cholec80/videos/`, tool annotations in `./datasets/Cholec80/tool_annotations/`, phase annotations in `./datasets/Cholec80/phase_annotations/`.
+Download Cholec80 from the official dataset page and place videos in `./datasets/Cholec80/videos/`, tool annotations in `./datasets/Cholec80/tool_annotations/`, phase annotations in `./datasets/Cholec80/phase_annotations/`.
 
-Download AutoLaparo from https://autolaparo.github.io/ and place videos in `./datasets/AutoLaparo_Task1/videos/`, labels in `./datasets/AutoLaparo_Task1/labels/`.
+Download AutoLaparo from the official dataset page and place videos in `./datasets/AutoLaparo_Task1/videos/`, labels in `./datasets/AutoLaparo_Task1/labels/`.
 
 ```bash
 # Cholec80
@@ -31,7 +31,7 @@ python datasets/data_preprosses/resize_frames.py
 ```bash
 mkdir -p models
 wget -O models/TimeSformer_divST_8x32_224_K400.pyth \
-  "https://www.dropbox.com/s/g5t24we9gl5yk88/TimeSformer_divST_8x32_224_K400.pyth?dl=1"
+  "<PRETRAINED_MODEL_URL>"
 ```
 
 Download Surgformer finetuned weights (refer to the original Surgformer repository for download links) and place at:

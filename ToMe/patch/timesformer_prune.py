@@ -1,6 +1,6 @@
 '''
 Adapted from https://github.com/facebookresearch/ToMe
-https://github.com/RenShuhuai-Andy/TESTA/blob/main/testa/patch/timesformer_prune.py
+<UPSTREAM_REPOSITORY_URL>
 Divided Temporal-Spatial Pruning
 '''
 from typing import Tuple

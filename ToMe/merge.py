@@ -23,7 +23,7 @@ def bipartite_soft_matching(
     frame_average: bool = True,
 ) -> Tuple[Callable, Callable]:
     """
-    Applies TESTA with a balanced matching set (50%, 50%).
+    Applies token merging with a balanced matching set (50%, 50%).
 
     Input size is [batch, tokens, channels].
     r indicates the number of tokens to remove (max 50% of tokens).

@@ -1,7 +1,7 @@
 # -----------------------------
 # Cut black margin for surgical video
-# Copyright (c) CUHK 2021.
-# IEEE TMI 'Temporal Relation Network for Workflow Recognition from Surgical Video'
+# Copyright (c) The Authors 2021.
+# Reference: Temporal Relation Network for Workflow Recognition from Surgical Video
 # -----------------------------
 
 import cv2
