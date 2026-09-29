@@ -223,15 +223,20 @@ def bipartite_soft_matching_TIM_TM(
                     # lower score_obj = higher entropy = keep this token
                     keep_src = src_so < dst_so_at_merge                  # [B, N, 1, 1]
                     kept_val = torch.where(keep_src, src_orig, dst_val)  # [B, N, 1, C]
+                    src = torch.where(below, kept_val, src)              # [B, N, 1, C]
+                elif not use_score_obj:
+                    # Eq. (8): average similar tokens through normal sum reduction;
+                    # for dissimilar tokens, replace the earlier dst with the later src.
+                    replacement = src_orig - dst_val
+                    src = torch.where(below, replacement, src_orig)      # [B, N, 1, C]
                 else:
                     kept_val = dst_val                                   # [B, N, 1, C]
+                    src = torch.where(below, kept_val, src)              # [B, N, 1, C]
 
-                src = torch.where(below, kept_val, src)  # [B, N, T-1, C]
-
-            # For weighted/threshold cases: subtract dst_val at merge position so
+            # For score-object cases: subtract dst_val at merge position so
             # scatter_reduce(include_self=True) cancels: dst_val + (merge_val - dst_val) = merge_val
             has_modified_src = (use_score_obj and all_src_sos[i] is not None and (alpha_src != 0 or alpha_dst != 0)) \
-                               or all_cos_sim_token[i] is not None
+                               or (use_score_obj and all_cos_sim_token[i] is not None)
             if has_modified_src:
                 T_cur = src.shape[2]
                 merge_mask = torch.zeros(1, 1, T_cur, 1, device=dst.device)
